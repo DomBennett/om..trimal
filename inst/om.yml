@@ -1,0 +1,6 @@
+program: trimal
+details: A tool for automated alignment trimming in large-scale phylogenetic analyses.
+docker: dombennett
+github: dombennett
+url: https://github.com/DomBennett/om..trimal
+
