@@ -7,7 +7,7 @@
 trimal <- function(args = arglist_get(...)) {
   files_to_send <- filestosend_get(arglist = args)
   arglist <- arglist_parse(arglist = args)
-  otsdr <- outsider_init(pkgnm = 'om..trimal', cmd = './trimal/source/trimal',
+  otsdr <- outsider_init(pkgnm = 'om..trimal', cmd = 'trimal',
                          arglist = arglist, files_to_send = files_to_send,
                          wd = getwd())
   res <- run(otsdr)
@@ -23,7 +23,7 @@ trimal <- function(args = arglist_get(...)) {
 readal <- function(args = arglist_get(...)) {
   files_to_send <- filestosend_get(arglist = args)
   arglist <- arglist_parse(arglist = args)
-  otsdr <- outsider_init(pkgnm = 'om..readal', cmd = './trimal/source/readal',
+  otsdr <- outsider_init(pkgnm = 'om..readal', cmd = 'readal',
                          arglist = arglist, files_to_send = files_to_send,
                          wd = getwd())
   res <- run(otsdr)
