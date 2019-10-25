@@ -1,4 +1,4 @@
-# Run `trimal` with `outsider` in R
+# Run [`trimal`](http://trimal.cgenomics.org/) with `outsider` in R
 [![Build Status](https://travis-ci.org/dombennett/om..trimal.svg?branch=master)](https://travis-ci.org/dombennett/om..trimal)
 
 
