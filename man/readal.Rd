@@ -23,7 +23,7 @@ readal('-h')
 
 # Real Example
 # download
-wd <- file.path(getwd(), 'example_job')
+wd <- file.path(tempdir(), 'example_job')
 if (!dir.exists(wd)) {
   dir.create(wd)
 }
@@ -32,7 +32,7 @@ url <- 'https://raw.githubusercontent.com/DomBennett/om..trimal/master/example_a
 download.file(url = url, destfile = alignment_file)
 # get info
 readal(arglist = c('-in', alignment_file, '-info'), outdir = wd)
-# convert to clustal
-readal(arglist = c('-in', alignment_file, '-out', 'example_alignment.clustal',
-                   '-clustal'), outdir = wd)
+# convert to phylip
+readal(arglist = c('-in', alignment_file, '-out', 'example_alignment.phylip',
+                   '-phylip_m10'), outdir = wd)
 }

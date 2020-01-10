@@ -1,0 +1,166 @@
+---
+output: github_document
+---
+<!--
+The README should be used to describe the program. It acts like the homepage of
+your module.
+
+Edit README.Rmd not README.md. The .Rmd file can be knitted to parse real-code
+examples and show their output in the .md file.
+
+To knit, use devtools::build_readme() or outsider.devtools::build()
+
+Edit the template to describe your program: how to install, import and run;
+run exemplary, small demonstrations; present key arguments; provide links and
+references to the program that the module wraps.
+
+Learn more about markdown and Rmarkdown:
+https://daringfireball.net/projects/markdown/syntax
+https://rmarkdown.rstudio.com/
+-->
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
+
+# Run [`trimal`](http://trimal.cgenomics.org/) with `outsider` in R
+
+[![Build Status](https://travis-ci.org/dombennett/om..trimal.svg?branch=master)](https://travis-ci.org/dombennett/om..trimal)
+
+> TRIMAL: Automated removal of spurious sequences or poorly aligned regions from
+a multiple sequence alignment
+
+
+<!-- Install information -->
+## Install and look up help
+
+```{r install-snippet, eval=TRUE, include=TRUE}
+library(outsider)
+module_install(repo = "dombennett/om..trimal")
+#module_help(repo = "dombennett/om..trimal")
+```
+
+The module provides two functions `trimal`, the main program for trimming
+alignments, and `readal`, a convenience tool for converting alignments into
+different file formats.
+
+## Examples
+
+Both functions have two arguments:
+
+* `arglist`: character vector of arguments to be passed to the program
+* `outdir`: File location where all resulting files will be returned
+
+The `arglist` function must be a character vector. For example, a call to a
+command-line program, like ...
+
+```bash
+command -xarg file --yarg --zarg=p1
+```
+
+Would be in R ...
+
+```r
+command(arglist=c('-xarg', file, '--yarg', '--zarg=p1'))
+```
+
+All the arguments indicated with the `-h` flag for both `trimal` and `readal`
+can be specified in the above way.
+
+### `trimal`
+
+```{r trimal-example, eval=TRUE, include=TRUE}
+library(outsider)
+# import
+trimal <- module_import('trimal', repo = 'dombennett/om..trimal')
+# help
+trimal('-h')
+
+# Real Example
+# download
+wd <- file.path(tempdir(), 'trimal_example')
+if (!dir.exists(wd)) {
+  dir.create(wd)
+}
+alignment_file <- file.path(wd, 'example_alignment.fasta')
+url <- 'https://raw.githubusercontent.com/DomBennett/om..trimal/master/example_alignment.fasta'
+download.file(url = url, destfile = alignment_file)
+# run trimal with automated1 method
+trimal(arglist = c('-in', alignment_file, '-out', 'trimal_results.fasta',
+                   '-automated1', '-fasta'), outdir = wd)
+
+# verify
+list.files(wd)
+```
+
+```{r cleanup-trimal, eval=TRUE, include=FALSE}
+if('wd' %in% ls() && dir.exists(wd)) {
+  unlink(x = wd, recursive = TRUE, force = TRUE)
+}
+```
+
+### `readal`
+
+```{r readal-example, eval=TRUE, include=TRUE}
+library(outsider)
+# import
+readal <- module_import('readal', repo = 'dombennett/om..trimal')
+# help
+readal('-h')
+
+# Real Example
+# download
+wd <- file.path(tempdir(), 'readal_example')
+if (!dir.exists(wd)) {
+  dir.create(wd)
+}
+alignment_file <- file.path(wd, 'example_alignment.fasta')
+url <- 'https://raw.githubusercontent.com/DomBennett/om..trimal/master/example_alignment.fasta'
+download.file(url = url, destfile = alignment_file)
+# get info
+readal(arglist = c('-in', alignment_file, '-info'), outdir = wd)
+# convert to phylip
+readal(arglist = c('-in', alignment_file, '-out', 'example_alignment.phylip',
+                   '-phylip_m10'), outdir = wd)
+
+# verify
+list.files(wd)
+```
+
+```{r cleanup-readal, eval=TRUE, include=FALSE}
+if('wd' %in% ls() && dir.exists(wd)) {
+  unlink(x = wd, recursive = TRUE, force = TRUE)
+}
+```
+
+```{r uninstall-snippet, eval=TRUE, include=FALSE}
+module_uninstall(repo = "dombennett/om..trimal")
+```
+
+## Links
+
+Find out more by visiting the
+[trimAL homepage](http://trimal.cgenomics.org/).
+
+## Please cite
+
+* trimAl: a tool for automated alignment trimming in large-scale phylogenetic
+analyses. Salvador Capella-Gutierrez; Jose M. Silla-Martinez; Toni Gabaldon.
+Bioinformatics 2009 25: 1972-1973.
+* Bennett et al. (2020). outsider: Install and run programs, outside of R,
+inside of R. *Journal of Open Source Software*, In review
+
+
+<!-- Footer -->
+---
+
+<img align="left" width="120" height="125" src="https://raw.githubusercontent.com/AntonelliLab/outsider/master/logo.png">
+
+**An `outsider` module**
+
+Learn more at [outsider website](https://antonellilab.github.io/outsider/).
+Want to build your own module? Check out [`outsider.devtools` website](https://antonellilab.github.io/outsider.devtools/).

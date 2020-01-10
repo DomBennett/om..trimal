@@ -6,7 +6,7 @@ readal('-h')
 
 # Real Example
 # download
-wd <- file.path(getwd(), 'example_job')
+wd <- file.path(tempdir(), 'example_job')
 if (!dir.exists(wd)) {
   dir.create(wd)
 }
